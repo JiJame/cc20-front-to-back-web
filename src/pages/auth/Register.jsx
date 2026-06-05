@@ -6,7 +6,8 @@ import axios from "axios";
 // rfce
 function Register() {
   // JS
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, formState } = useForm();
+  const { isSubmitting } = formState;
 
   const hdlSubmit = async (value) => {
     // createAlert("success", "Good Job !!!");
@@ -15,6 +16,8 @@ function Register() {
         "http://localhost:8000/auth/register",
         value,
       );
+      console.log(res);
+      createAlert("success", res.data.message);
     } catch (error) {
       console.log(error);
       createAlert("info", error.response?.data?.message);
@@ -38,7 +41,7 @@ function Register() {
 
           <div className="flex justify-center mt-4">
             <button className="bg-black text-white p-2 rounded-md">
-              Register
+              {isSubmitting ? "T" : "F"}
             </button>
           </div>
         </form>
