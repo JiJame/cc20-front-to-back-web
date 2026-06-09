@@ -3,7 +3,7 @@ import { Loader } from "lucide-react";
 function Buttons({ isSubmitting, label }) {
   return (
     <button
-      disable={isSubmitting}
+      disabled={isSubmitting}
       className="bg-black text-white p-2 rounded-md
       hover:bg-gray-500 hover:scale-105 hover:cursor-pointer"
     >
