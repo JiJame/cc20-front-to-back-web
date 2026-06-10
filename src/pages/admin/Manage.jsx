@@ -21,6 +21,11 @@ function Manage() {
     }
   };
 
+  // update when dropdown select
+  const hdlUpdateRole = async (token, id, role) => {
+    console.log(token, id, role);
+  };
+
   return (
     <div>
       <table className="table-auto">
@@ -41,6 +46,19 @@ function Manage() {
                 <td>{item.name}</td>
                 <td>{item.email}</td>
                 <td>{item.role}</td>
+
+                <td>
+                  <select
+                    defaultValue={item.role}
+                    onChange={(e) =>
+                      hdlUpdateRole(token, item.id, e.target.value)
+                    }
+                  >
+                    <option>USER</option>
+                    <option>ADMIN</option>
+                  </select>
+                </td>
+
                 <td>Delete</td>
               </tr>
             );
