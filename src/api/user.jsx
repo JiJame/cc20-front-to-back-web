@@ -7,6 +7,13 @@ export const getMe = async (token) => {
     },
   });
 };
+export const actionListUsers = async (token) => {
+  return await axios.get("http://localhost:8000/api/users", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
 // export const actionRegister2 = async (value) => {
 //   await axios.post("http://localhost:8000/auth/register", value);

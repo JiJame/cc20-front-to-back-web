@@ -2,15 +2,18 @@ import { BookDashed, CircleUserRound, LayoutDashboard } from "lucide-react";
 import React from "react";
 import { Link } from "react-router";
 import { sidebarLink } from "../../utils/links";
+import useAuthStore from "../../store/auth-store";
 
 function Sidebar() {
+  const user = useAuthStore((state) => state.user);
+  // console.log(user);
   return (
     <div className="bg-black w-48">
       {/* Profile */}
 
       <div className="text-white flex flex-col py-12 items-center">
         <CircleUserRound size={48} />
-        <p>Welcome ...</p>
+        <p>Welcome {user && user.role}</p>
       </div>
 
       {/* NavLink */}
@@ -19,7 +22,7 @@ function Sidebar() {
           <Link
             key={item.label}
             to={item.link}
-            className="text-white flex gap-2 px-4 py-4"
+            className="text-white flex gap-2 px-4 py-2 hover:bg-gray-400"
           >
             <span>{item.icon}</span>
             <p>{item.label}</p>
