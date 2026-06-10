@@ -1,7 +1,14 @@
 // rfce
 import React, { useEffect, useState } from "react";
 import useAuthStore from "../../store/auth-store";
-import { actionListUsers } from "../../api/user";
+import {
+  actionDeleteUser,
+  actionListUsers,
+  actionUpdateRole,
+} from "../../api/user";
+import { createAlert } from "../../utils/createAlert";
+import { Trash } from "lucide-react";
+import Swal from "sweetalert2";
 
 function Manage() {
   // JS
@@ -24,6 +31,33 @@ function Manage() {
   // update when dropdown select
   const hdlUpdateRole = async (token, id, role) => {
     console.log(token, id, role);
+    try {
+      const res = await actionUpdateRole(token, id, { role });
+      console.log(res);
+      createAlert("success", res.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const hdlDeleteUser = async (token, id) => {
+    const { isConfirmed } = await Swal.fire({
+      icon: "question",
+      text: "Are you sure?",
+      showCancelButton: true,
+      showCloseButton: true,
+    });
+
+    if (isConfirmed) {
+      try {
+        const res = await actionDeleteUser(token, id);
+        console.log(res);
+        createAlert("success", res.data.message);
+        fetchUsers();
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -59,7 +93,12 @@ function Manage() {
                   </select>
                 </td>
 
-                <td>Delete</td>
+                <td>
+                  <Trash
+                    onClick={() => hdlDeleteUser(token, item.id)}
+                    color="red"
+                  />
+                </td>
               </tr>
             );
           })}
